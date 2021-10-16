@@ -6,9 +6,9 @@ export default function Greeting({user, color, gratitudes, hasSubmittedToday}) {
             </h1>
             {
                 hasSubmittedToday ? (
-                    <h2 className="font-black">Today you're grateful for {gratitudes.slice(-1)[0]}.</h2>
+                    <h2 className="font-bold">Today you're grateful for {gratitudes.slice(-1)[0]}.</h2>
                 ) : (
-                    <h2 className="font-black">What are you grateful for today?</h2>
+                    <h2 className="font-bold mt-4">What are you grateful for today?</h2>
                 )
             }
         </div>

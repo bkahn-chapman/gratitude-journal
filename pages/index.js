@@ -20,7 +20,7 @@ export default function Home() {
   }
 
   return (
-    <div className="bg-gray-700 min-h-screen min-w-screen">
+    <div className="bg-blue-900 min-h-screen min-w-screen">
       <Head>
         <title>Hello</title>
         <link rel="icon" href="/favicon.ico" />
@@ -28,7 +28,7 @@ export default function Home() {
 
       <main className="red container mx-auto max-w-prose px-4 pt-12">
         <Greeting
-          color="text-pink-300"
+          color="text-green-400"
           user={user}
           gratitudes={gratitudes}
           hasSubmittedToday={hasSubmittedToday}
