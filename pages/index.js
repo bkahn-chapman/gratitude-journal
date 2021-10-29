@@ -2,52 +2,36 @@ import Head from 'next/head'
 import Greeting from '../components/Greeting'
 import History from '../components/History'
 import Input from '../components/Input'
+import GratitudeApp from '../components/GratitudeApp'
 import { useState } from 'react'
+import { Auth } from '@supabase/ui'
+import { supabase } from "../utils/supabaseClient.js"
 
 export default function Home() {
-  const [user, setUser] = useState({
-      "name": "Ben",
-      "email": "bkahn@chapman.edu"
-    })
-
-  const [gratitudes, setGratitudes] = useState(['hockey', 'computers'])
-  const [hasSubmittedToday, setSubmittedToday] = useState(false)
-
-  const addGratitude = (entry) => {
-    let newGratitudes = [...gratitudes, entry]
-    setGratitudes(newGratitudes)
-    setSubmittedToday(true)
-  }
+  // gets the logged in user from Auth.UserContextProvider
+  // if no user is logged in, user will be null
+  // if a user is logged in, user will be an object with user info
+  const { user } = Auth.useUser()
 
   return (
     <div className="bg-blue-900 min-h-screen min-w-screen">
       <Head>
-        <title>Hello</title>
+        <title>Gratitude Journal</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="red container mx-auto max-w-prose px-4 pt-12">
-        <Greeting
-          color="text-green-400"
-          user={user}
-          gratitudes={gratitudes}
-          hasSubmittedToday={hasSubmittedToday}
-        ></Greeting>
-        <div className="spacer" />
         {
-          !hasSubmittedToday && <Input handleSubmit={addGratitude} />
-        }
-        <div className="spacer" />
-        {
-          gratitudes.length > 0 && 
-          <History gratitudes={gratitudes} />
+          // display app if user is logged in, otherwise show login module
+          user ? (
+            <GratitudeApp user={user}/>
+          ) : (
+            <div className="bg-white">
+              <Auth supabaseClient={supabase} socialLayout="horizontal" socialButtonSize="xlarge"/>
+            </div> 
+          )       
         }
       </main>
-      <style jsx>{`
-        .spacer {
-          height: 20px;
-        }
-      `}</style>
     </div>
   )
 }
