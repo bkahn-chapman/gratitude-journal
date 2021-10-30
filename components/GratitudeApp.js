@@ -32,7 +32,11 @@ export default function GratitudeApp({ user }) {
             /* TODO: See if time since last submission > 24 hours
              * if not, set submittedToday to true
             */
+            let currentTime = new Date().getTime()
             let mostRecentRecord = new Date(gratitudes.slice(-1)[0].date_insert_ts).getTime()
+            let hoursSinceLastSubmission = (mostRecentRecord - currentTime) / 36000000
+            let didSubmitToday = hoursSinceLastSubmission < 24
+            setSubmittedToday(didSubmitToday)
             setGratitudes(gratitudes)
             setLoading(false)
         } else {
@@ -72,8 +76,8 @@ export default function GratitudeApp({ user }) {
 
     /* Everything went as expected, show full app */
     return (
-        <div className="bg-blue-900 min-h-screen min-w-screen">
-            <main className="red container mx-auto max-w-prose px-4 pt-12">
+        <div className="bg-blue-900 min-w-screen">
+            <main className="red container mx-auto px-4 pt-12">
                 <Greeting
                     color="text-green-400"
                     user={user}

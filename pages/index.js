@@ -20,11 +20,19 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="red container mx-auto max-w-prose px-4 pt-12">
+      <main className="container mx-auto px-4 pt-12">
         {
           // display app if user is logged in, otherwise show login module
           user ? (
-            <GratitudeApp user={user}/>
+            <div>
+              <GratitudeApp user={user} />
+              <button onClick={async () => {
+                  let { error } = await supabase.auth.signOut()
+                }} 
+                className="text-pink-300">
+                  Log Off
+              </button>
+            </div>
           ) : (
             <div className="bg-white">
               <Auth supabaseClient={supabase} socialLayout="horizontal" socialButtonSize="xlarge"/>
